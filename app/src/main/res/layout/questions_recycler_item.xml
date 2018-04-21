@@ -5,10 +5,39 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
-    android:background="@drawable/layout_rounded"
+    android:background="@drawable/question_rounded"
     android:clipToPadding="true"
     android:elevation="6dp"
     android:padding="8dp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/question_user_photo"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/question_user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:hint="user name"
+        app:layout_constraintBottom_toBottomOf="@+id/question_user_photo"
+        app:layout_constraintStart_toEndOf="@+id/question_user_photo"
+        app:layout_constraintTop_toTopOf="@+id/question_user_photo" />
+
+    <ImageButton
+        android:id="@+id/question_bookmark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/ic_star_false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/question"
@@ -22,7 +51,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/question_bookmark" />
+        app:layout_constraintTop_toBottomOf="@+id/question_user_photo" />
 
     <View
         android:id="@+id/top_of"
@@ -31,7 +60,6 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:answer="@string/top_answer"
         android:background="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="@+id/question"
         app:layout_constraintStart_toStartOf="@+id/question"
@@ -51,26 +79,6 @@
         app:layout_constraintStart_toStartOf="@+id/textView2"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
-    <ImageButton
-        android:id="@+id/question_bookmark"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/ic_star_false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageButton
-        android:id="@+id/question_user_photo"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/image_round"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
@@ -80,13 +88,4 @@
         app:layout_constraintStart_toStartOf="@+id/top_of"
         app:layout_constraintTop_toBottomOf="@+id/top_of" />
 
-    <TextView
-        android:id="@+id/question_user_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:hint="user name"
-        app:layout_constraintBottom_toBottomOf="@+id/question_user_photo"
-        app:layout_constraintStart_toEndOf="@+id/question_user_photo"
-        app:layout_constraintTop_toTopOf="@+id/question_user_photo" />
 </android.support.constraint.ConstraintLayout>

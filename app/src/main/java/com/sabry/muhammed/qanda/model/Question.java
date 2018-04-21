@@ -1,6 +1,7 @@
 package com.sabry.muhammed.qanda.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -12,6 +13,9 @@ public class Question implements Serializable {
     private String id;
     private Date date;
 
+    public Question() {
+        answers = new ArrayList<>();
+    }
     public Date getDate() {
         return date;
     }

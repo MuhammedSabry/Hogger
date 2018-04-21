@@ -8,10 +8,14 @@ import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.widget.Toast;
 
 import com.sabry.muhammed.qanda.R;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class CommonUtils {
     private static boolean quitApp = false;
@@ -24,7 +28,7 @@ public class CommonUtils {
             public void run() {
                 quitApp = false;
             }
-        }, new Date(), 200);
+        }, new Date(), 2000);
     }
 
     public static void shutDownActivity(Activity activity) {
@@ -44,5 +48,13 @@ public class CommonUtils {
         bitmapDrawable.setCircular(true);
         bitmapDrawable.setCornerRadius(Math.max(bitmap.getWidth(), bitmap.getHeight()) / 2.0f);
         return bitmapDrawable;
+    }
+
+    public static void loadImage(CircleImageView view, String url) {
+        Picasso.get().load(url).into(view);
+    }
+
+    public static void loadImage(Target target, String url) {
+        Picasso.get().load(url).into(target);
     }
 }

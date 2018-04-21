@@ -26,13 +26,17 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.sabry.muhammed.qanda.adapter.QuestionsRecyclerAdapter;
-import com.sabry.muhammed.qanda.dialog.QuestionDialogFragment;
+import com.sabry.muhammed.qanda.dialog.DialogFragment;
 import com.sabry.muhammed.qanda.model.Question;
+import com.sabry.muhammed.qanda.util.CommonUtils;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.NavigableMap;
+import java.util.TreeMap;
 
 import static com.sabry.muhammed.qanda.MainActivity.currentUser;
 import static com.sabry.muhammed.qanda.util.CommonUtils.roundImage;
@@ -41,7 +45,15 @@ import static com.sabry.muhammed.qanda.util.CommonUtils.shutDownActivity;
 
 public class QuestionsActivity extends AppCompatActivity {
 
-    private List<Question> questionList = new ArrayList<>();
+    private NavigableMap<String, Question> questionList = new TreeMap<>(new Comparator<String>() {
+        @Override
+        public int compare(String o1, String o2) {
+            return o1.compareTo(o2);
+        }
+    });
+
+    private List<Question> questionMapList = new ArrayList<>(questionList.values());
+
     private Target target;
     private FirebaseFirestore db;
 
@@ -60,19 +72,22 @@ public class QuestionsActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         questionsCollection = db.collection(getResources().getString(R.string.questions_collection));
 
-        floatingActionButton = findViewById(R.id.floatingActionButton);
+        floatingActionButton = findViewById(R.id.add_question_button);
 
         mRecyclerView = findViewById(R.id.questions_recycler_view);
         mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        mAdapter = new QuestionsRecyclerAdapter(questionList, new QuestionsRecyclerAdapter.OnItemClickListener() {
+
+
+        mAdapter = new QuestionsRecyclerAdapter(questionMapList, new QuestionsRecyclerAdapter.OnItemClickListener() {
             @Override
             public void OnClick(View view, int position) {
-                Question question = questionList.get(position);
+                Question question = questionList.get(questionMapList.get(position).getId());
                 if (view.getId() == R.id.question_bookmark) {
                     //TODO put logic for checking weather a question is starred or not
                 }
                 Intent intent = new Intent(QuestionsActivity.this, AnswersActivity.class);
-                intent.putExtra("context", question);
+                intent.putExtra("question", question);
+                startActivity(intent);
             }
 
             @Override
@@ -88,8 +103,8 @@ public class QuestionsActivity extends AppCompatActivity {
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                QuestionDialogFragment dialog = new QuestionDialogFragment();
-                dialog.show(getFragmentManager(), "QuestionAdder");
+                DialogFragment dialog = new DialogFragment();
+                dialog.show(getFragmentManager(), "Question");
             }
         });
 
@@ -106,19 +121,21 @@ public class QuestionsActivity extends AppCompatActivity {
                                                                return;
                                                            }
                                                            for (DocumentChange dc : queryDocumentSnapshots.getDocumentChanges()) {
+                                                               Question question = dc.getDocument().toObject(Question.class);
                                                                switch (dc.getType()) {
                                                                    case ADDED:
-                                                                       questionList.add(dc.getDocument().toObject(Question.class));
-                                                                       mAdapter.notifyDataSetChanged();
+                                                                       questionList.put(dc.getDocument().getId(), question);
+                                                                       questionMapList.add(question);
                                                                        break;
                                                                    case MODIFIED:
+                                                                       questionList.put(dc.getDocument().getId(), question);
                                                                        break;
                                                                    case REMOVED:
-                                                                       questionList.remove(dc.getDocument().toObject(Question.class));
+                                                                       questionList.remove(dc.getDocument().getId());
                                                                        break;
                                                                }
                                                            }
-
+                                                           mAdapter.notifyDataSetChanged();
                                                        }
                                                    });
                                                } else {
@@ -155,7 +172,7 @@ public class QuestionsActivity extends AppCompatActivity {
             public void onPrepareLoad(Drawable placeHolderDrawable) {
             }
         };
-        Picasso.get().load(currentUser.getPhotoUrl()).into(target);
+        CommonUtils.loadImage(target, currentUser.getPhotoUrl());
         return true;
     }
 

@@ -12,4 +12,5 @@
     <string name="add_question">Add Question</string>
     <string name="quit_app">Press back again to quit app</string>
     <string name="user">User</string>
+    <string name="answers_collection">answers</string>
 </resources>

@@ -1,22 +1,23 @@
 package com.sabry.muhammed.qanda.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Answer {
+public class Answer implements Serializable {
 
-    private String id;
+    private int id;
 
     private User user;
 
     private String answer;
-    private Question question;
+    private String question;
     private Date date;
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -28,11 +29,11 @@ public class Answer {
         this.date = date;
     }
 
-    public Question getQuestion() {
+    public String getQuestion() {
         return question;
     }
 
-    public void setQuestion(Question question) {
+    public void setQuestion(String question) {
         this.question = question;
     }
 

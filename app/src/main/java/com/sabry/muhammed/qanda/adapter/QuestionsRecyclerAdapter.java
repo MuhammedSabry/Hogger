@@ -6,14 +6,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.sabry.muhammed.qanda.R;
 import com.sabry.muhammed.qanda.model.Question;
-import com.squareup.picasso.Picasso;
+import com.sabry.muhammed.qanda.util.CommonUtils;
 
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class QuestionsRecyclerAdapter extends android.support.v7.widget.RecyclerView.Adapter<QuestionsRecyclerAdapter.QuestionsViewHolder> {
@@ -60,7 +61,7 @@ public class QuestionsRecyclerAdapter extends android.support.v7.widget.Recycler
         TextView topAnswer;
         ConstraintLayout layout;
         TextView userName;
-        ImageButton userPhoto;
+        CircleImageView userPhoto;
 
         QuestionsViewHolder(View view) {
             super(view);
@@ -89,9 +90,9 @@ public class QuestionsRecyclerAdapter extends android.support.v7.widget.Recycler
         //Binding data to views inside the recyclerView item
         void bind(Question q) {
             question.setText(q.getQuestion());
-            Picasso.get().load(q.getUser().getPhotoUrl()).centerCrop().into(this.userPhoto);
+            CommonUtils.loadImage(this.userPhoto, q.getUser().getPhotoUrl());
             this.userName.setText(q.getUser().getName());
-            if (q.getAnswers() != null)
+            if (!q.getAnswers().isEmpty())
                 topAnswer.setText(q.getAnswers().get(0).getAnswer());
             else
                 topAnswer.setText("No answers yet :(");

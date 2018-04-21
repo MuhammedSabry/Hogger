@@ -79,11 +79,15 @@ public class MainActivity extends AppCompatActivity {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         //User not inside
         if (currentUser != null) {
-            displayQuestions();
+            displayQuestions(currentUser);
         }
     }
 
-    private void displayQuestions() {
+    private void displayQuestions(FirebaseUser user) {
+        currentUser = new User();
+        currentUser.setId(user.getUid());
+        currentUser.setName(user.getDisplayName());
+        currentUser.setPhotoUrl(user.getPhotoUrl().toString());
         Intent intent = new Intent(this, QuestionsActivity.class);
         startActivity(intent);
     }
@@ -103,15 +107,11 @@ public class MainActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             FirebaseUser user = mAuth.getCurrentUser();
-                            currentUser = new User();
-                            currentUser.setId(user.getUid());
-                            currentUser.setName(user.getDisplayName());
-                            currentUser.setPhotoUrl(user.getPhotoUrl());
 
                             assert user != null;
                             Toast.makeText(MainActivity.this, "Welcome back " + user.getDisplayName() + " :)",
                                     Toast.LENGTH_SHORT).show();
-                            displayQuestions();
+                            displayQuestions(user);
                         } else {
                             // If sign in fails, display a message to the user.
                             Toast.makeText(MainActivity.this, "Authentication failed.",

@@ -1,13 +1,12 @@
 package com.sabry.muhammed.qanda.model;
 
-import android.net.Uri;
-
+import java.io.Serializable;
 import java.util.List;
 
-public class User {
+public class User implements Serializable {
     private String id;
     private String name;
-    private Uri photoUrl;
+    private String photoUrl;
     private List<Question> starredQuestions;
 
     public List<Question> getStarredQuestions() {
@@ -17,6 +16,7 @@ public class User {
     public void setStarredQuestions(List<Question> starredQuestions) {
         this.starredQuestions = starredQuestions;
     }
+
     public String getId() {
         return id;
     }
@@ -33,11 +33,11 @@ public class User {
         this.name = name;
     }
 
-    public Uri getPhotoUrl() {
+    public String getPhotoUrl() {
         return photoUrl;
     }
 
-    public void setPhotoUrl(Uri photoUrl) {
+    public void setPhotoUrl(String photoUrl) {
         this.photoUrl = photoUrl;
     }
 
