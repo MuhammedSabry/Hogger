@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "608808898159",
+    "firebase_url": "https://q-and-a-8a445.firebaseio.com",
+    "project_id": "q-and-a-8a445",
+    "storage_bucket": "q-and-a-8a445.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:608808898159:android:201f050aa40fe0b8",
+        "android_client_info": {
+          "package_name": "com.sabry.muhammed.qanda"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "608808898159-snugip6jlq9ech4rbks9nqra0da7cvhh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBuKPv70deh4Zv8iPSFzwzAu9NdDFQBnV4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
