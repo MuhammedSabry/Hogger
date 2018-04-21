@@ -21,9 +21,11 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.sabry.muhammed.qanda.model.User;
 
 
 public class MainActivity extends AppCompatActivity {
+    public static User currentUser;
 
     private CallbackManager callbackManager;
     private FirebaseAuth mAuth;
@@ -101,6 +103,11 @@ public class MainActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             FirebaseUser user = mAuth.getCurrentUser();
+                            currentUser = new User();
+                            currentUser.setId(user.getUid());
+                            currentUser.setName(user.getDisplayName());
+                            currentUser.setPhotoUrl(user.getPhotoUrl());
+
                             assert user != null;
                             Toast.makeText(MainActivity.this, "Welcome back " + user.getDisplayName() + " :)",
                                     Toast.LENGTH_SHORT).show();

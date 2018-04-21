@@ -4,10 +4,21 @@ import java.util.Date;
 
 public class Answer {
 
+    private String id;
+
     private User user;
-    private String text;
+
+    private String answer;
     private Question question;
     private Date date;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public Date getDate() {
         return date;
@@ -33,12 +44,12 @@ public class Answer {
         this.user = user;
     }
 
-    public String getText() {
-        return text;
+    public String getAnswer() {
+        return answer;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setAnswer(String answer) {
+        this.answer = answer;
     }
 
 }

@@ -18,7 +18,7 @@
         android:clickable="true"
         android:focusable="true"
         android:src="@drawable/ic_add"
-        android:text="@string/add_question_button"
+        android:answer="@string/add_question_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 </android.support.constraint.ConstraintLayout>

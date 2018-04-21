@@ -18,7 +18,9 @@ public class AnswersActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_answers);
+
         Question question = (Question) getIntent().getExtras().get("question");
+
         TextView viewById = findViewById(R.id.answer_question);
         viewById.setText(question.getQuestion());
 

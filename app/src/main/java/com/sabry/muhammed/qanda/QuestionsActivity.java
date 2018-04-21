@@ -7,8 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -34,15 +32,15 @@ import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
+
+import static com.sabry.muhammed.qanda.MainActivity.currentUser;
+import static com.sabry.muhammed.qanda.util.CommonUtils.roundImage;
+import static com.sabry.muhammed.qanda.util.CommonUtils.shutDownActivity;
 
 
 public class QuestionsActivity extends AppCompatActivity {
-    boolean quitApp = false;
-    private Timer timer;
+
     private List<Question> questionList = new ArrayList<>();
     private Target target;
     private FirebaseFirestore db;
@@ -130,33 +128,23 @@ public class QuestionsActivity extends AppCompatActivity {
                                            }
                                        }
                 );
-        timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                quitApp = false;
-            }
-        }, new Date(), 200);
+
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(final Menu menu) {
         getMenuInflater().inflate(R.menu.questions_menu, menu);
-        menu.getItem(0).setTitle(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
+        menu.getItem(0).setTitle(currentUser.getName());
         return true;
     }
 
     @Override
     public boolean onPrepareOptionsMenu(final Menu menu) {
-
         target = new Target() {
             @Override
             public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                RoundedBitmapDrawable bitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
-                bitmapDrawable.setCircular(true);
-                bitmapDrawable.setCornerRadius(Math.max(bitmap.getWidth(), bitmap.getHeight()) / 2.0f);
-                menu.getItem(0).setIcon(bitmapDrawable);
+                menu.getItem(0).setIcon(roundImage(bitmap, QuestionsActivity.this));
             }
 
             @Override
@@ -167,7 +155,7 @@ public class QuestionsActivity extends AppCompatActivity {
             public void onPrepareLoad(Drawable placeHolderDrawable) {
             }
         };
-        Picasso.get().load(FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl()).into(target);
+        Picasso.get().load(currentUser.getPhotoUrl()).into(target);
         return true;
     }
 
@@ -186,14 +174,6 @@ public class QuestionsActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (quitApp) {
-            this.finishAffinity();
-        } else {
-            quitApp = true;
-            Toast.makeText(this
-                    , getResources().getString(R.string.quit_app)
-                    , Toast.LENGTH_SHORT)
-                    .show();
-        }
+        shutDownActivity(this);
     }
 }

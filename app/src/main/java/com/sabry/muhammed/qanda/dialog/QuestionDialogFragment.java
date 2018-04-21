@@ -14,11 +14,12 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.sabry.muhammed.qanda.R;
 import com.sabry.muhammed.qanda.model.Question;
+
+import static com.sabry.muhammed.qanda.MainActivity.currentUser;
 
 
 public class QuestionDialogFragment extends DialogFragment {
@@ -42,7 +43,7 @@ public class QuestionDialogFragment extends DialogFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         Question question = new Question();
-                        question.setUser(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
+                        question.setUser(currentUser);
                         question.setQuestion(editText.getText().toString());
                         addQuestion(question);
                     }
