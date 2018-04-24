@@ -1,4 +1,4 @@
-package com.sabry.muhammed.hogger;
+package com.sabry.muhammed.hogger.activity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -17,6 +17,7 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.sabry.muhammed.hogger.R;
 import com.sabry.muhammed.hogger.adapter.CommentsRecyclerAdapter;
 import com.sabry.muhammed.hogger.model.Comment;
 import com.sabry.muhammed.hogger.model.Post;
@@ -52,7 +53,7 @@ public class CommentsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_answers);
+        setContentView(R.layout.activity_comments);
 
         floatingActionButton = findViewById(R.id.add_answer_button);
 

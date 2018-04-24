@@ -1,4 +1,4 @@
-package com.sabry.muhammed.hogger;
+package com.sabry.muhammed.hogger.activity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -23,6 +23,7 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.sabry.muhammed.hogger.R;
 import com.sabry.muhammed.hogger.adapter.PostsRecyclerAdapter;
 import com.sabry.muhammed.hogger.model.Post;
 import com.sabry.muhammed.hogger.util.CommonUtil;
@@ -105,7 +106,7 @@ public class PostsActivity extends AppCompatActivity {
                 builder.create().show();
             }
         });
-//        FirestoreUtil.getPosts();
+
         onDocumentChange();
     }
 
@@ -147,7 +148,6 @@ public class PostsActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.photo_icon:
                 logoutUser(this);
-//                startActivity(new Intent(this, UserProfileActivity.class));
                 break;
             default:
                 break;
@@ -172,12 +172,6 @@ public class PostsActivity extends AppCompatActivity {
         intent.putExtra(POST, post);
         startActivity(intent);
     }
-
-
-//    public void setPosts(List<Post> posts) {
-////        postsList = posts;
-//        mAdapter.notifyDataSetChanged();
-//    }
 
     private void onDocumentChange() {
         FirebaseFirestore.getInstance().collection(POST)

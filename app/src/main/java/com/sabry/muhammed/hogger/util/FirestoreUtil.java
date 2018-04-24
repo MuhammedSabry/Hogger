@@ -13,7 +13,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.sabry.muhammed.hogger.CommentsActivity;
+import com.sabry.muhammed.hogger.activity.CommentsActivity;
 import com.sabry.muhammed.hogger.model.Comment;
 import com.sabry.muhammed.hogger.model.Post;
 import com.sabry.muhammed.hogger.model.User;

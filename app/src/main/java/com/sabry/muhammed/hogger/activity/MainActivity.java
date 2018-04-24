@@ -1,17 +1,11 @@
-package com.sabry.muhammed.hogger;
+package com.sabry.muhammed.hogger.activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Base64;
-import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -26,12 +20,10 @@ import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
+import com.sabry.muhammed.hogger.R;
 import com.sabry.muhammed.hogger.model.User;
 import com.sabry.muhammed.hogger.util.FirebaseUtil;
 import com.sabry.muhammed.hogger.util.FirestoreUtil;
-
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
 import static com.sabry.muhammed.hogger.util.FirebaseUtil.getCurrentUser;
 
@@ -51,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        getHash(this);
         emailButton = findViewById(R.id.email_login);
         facebookButton = findViewById(R.id.facebook_login);
         realButton = findViewById(R.id.actual_facebook_login);
@@ -127,7 +118,9 @@ public class MainActivity extends AppCompatActivity {
                                     launchActivity();
                                 } else {
                                     InputMethodManager manager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                                    manager.hideSoftInputFromWindow(loginButton.getRootView().getWindowToken(), 0);
+                                    if (manager != null) {
+                                        manager.hideSoftInputFromWindow(loginButton.getRootView().getWindowToken(), 0);
+                                    }
                                     Snackbar.make(loginButton.getRootView(), "Wrong email or password", Toast.LENGTH_SHORT).show();
                                 }
                             }
@@ -164,27 +157,5 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         this.finishAffinity();
-    }
-
-    private void getHash(Activity activity) {
-        PackageInfo info;
-
-        try {
-            info = activity.getPackageManager().getPackageInfo("com.sabry.muhammed.hogger", PackageManager.GET_SIGNATURES);
-            for (Signature signature : info.signatures) {
-                MessageDigest md;
-                md = MessageDigest.getInstance("SHA");
-                md.update(signature.toByteArray());
-                String something = new String(Base64.encode(md.digest(), 0));
-                //String something = new String(Base64.encodeBytes(md.digest()));
-                Log.e("hash key", something);
-            }
-        } catch (PackageManager.NameNotFoundException e1) {
-            Log.e("name not found", e1.toString());
-        } catch (NoSuchAlgorithmException e) {
-            Log.e("no such an algorithm", e.toString());
-        } catch (Exception e) {
-            Log.e("exception", e.toString());
-        }
     }
 }

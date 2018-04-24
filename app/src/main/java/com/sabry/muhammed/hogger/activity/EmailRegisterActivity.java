@@ -1,4 +1,4 @@
-package com.sabry.muhammed.hogger;
+package com.sabry.muhammed.hogger.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +12,7 @@ import android.widget.EditText;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
+import com.sabry.muhammed.hogger.R;
 
 import static com.sabry.muhammed.hogger.util.FirebaseUtil.getFirebaseAuth;
 

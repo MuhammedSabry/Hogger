@@ -14,7 +14,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.sabry.muhammed.hogger.MainActivity;
+import com.sabry.muhammed.hogger.activity.MainActivity;
 import com.sabry.muhammed.hogger.model.User;
 
 public class FirebaseUtil {

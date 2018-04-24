@@ -1,7 +1,9 @@
-package com.sabry.muhammed.hogger;
+package com.sabry.muhammed.hogger.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+
+import com.sabry.muhammed.hogger.R;
 
 public class UserProfileActivity extends AppCompatActivity {
 

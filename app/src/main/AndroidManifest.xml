@@ -37,7 +37,7 @@
 
         <!-- Related to my app activities-->
         <activity
-            android:name=".MainActivity"
+            android:name=".activity.MainActivity"
             android:label="Hogger">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -46,17 +46,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".PostsActivity"
+            android:name=".activity.PostsActivity"
             android:label="Posts" />
 
         <activity
-            android:name=".CommentsActivity"
+            android:name=".activity.CommentsActivity"
             android:label="Comments" />
         <activity
-            android:name=".EmailRegisterActivity"
+            android:name=".activity.EmailRegisterActivity"
             android:label="Register"
             android:noHistory="true" />
-        <activity android:name=".UserProfileActivity" />
+        <activity android:name=".activity.UserProfileActivity" />
     </application>
 
 </manifest>
