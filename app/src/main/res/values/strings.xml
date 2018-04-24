@@ -1,16 +1,20 @@
 <resources>
-    <string name="app_name">Q and A</string>
+
+    <string name="app_name">Hogger</string>
+
     <string name="facebook_app_id">577511992624385</string>
     <string name="fb_login_protocol_scheme">fb577511992624385</string>
-    <string name="email_login">Login With Email</string>
+
+    <string name="email_login">Register With Email</string>
     <string name="facebook_login">Login With Facebook</string>
     <string name="add_question_button">New Question</string>
-    <string name="top_answer">Top answer:</string>
+    <string name="top_answer">Top comment:</string>
     <string name="questions_collection">questions</string>
-    <string name="question">Question:</string>
+    <string name="postId">Question:</string>
     <string name="cancel">Cancel</string>
     <string name="add_question">Add Question</string>
     <string name="quit_app">Press back again to quit app</string>
-    <string name="user">User</string>
-    <string name="answers_collection">answers</string>
+    <string name="userId">User</string>
+    <string name="answers_collection">comments</string>
+    <string name="login">Login</string>
 </resources>

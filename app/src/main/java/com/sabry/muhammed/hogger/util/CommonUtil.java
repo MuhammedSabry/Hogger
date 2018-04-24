@@ -1,4 +1,4 @@
-package com.sabry.muhammed.qanda.util;
+package com.sabry.muhammed.hogger.util;
 
 import android.app.Activity;
 import android.content.Context;
@@ -7,7 +7,7 @@ import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.widget.Toast;
 
-import com.sabry.muhammed.qanda.R;
+import com.sabry.muhammed.hogger.R;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
@@ -17,7 +17,7 @@ import java.util.TimerTask;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class CommonUtils {
+public class CommonUtil {
     private static boolean quitApp = false;
     private static Timer timer;
 

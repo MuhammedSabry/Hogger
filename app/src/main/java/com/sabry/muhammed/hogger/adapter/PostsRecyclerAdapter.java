@@ -1,4 +1,4 @@
-package com.sabry.muhammed.qanda.adapter;
+package com.sabry.muhammed.hogger.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
@@ -8,21 +8,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.sabry.muhammed.qanda.R;
-import com.sabry.muhammed.qanda.model.Question;
-import com.sabry.muhammed.qanda.util.CommonUtils;
+import com.sabry.muhammed.hogger.R;
+import com.sabry.muhammed.hogger.model.Post;
+import com.sabry.muhammed.hogger.model.User;
+import com.sabry.muhammed.hogger.util.CommonUtil;
+import com.sabry.muhammed.hogger.util.FirestoreUtil;
 
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
-public class QuestionsRecyclerAdapter extends android.support.v7.widget.RecyclerView.Adapter<QuestionsRecyclerAdapter.QuestionsViewHolder> {
+public class PostsRecyclerAdapter extends android.support.v7.widget.RecyclerView.Adapter<PostsRecyclerAdapter.QuestionsViewHolder> {
 
-    private List<Question> list;
+    private List<Post> list;
     private OnItemClickListener mOnClick;
 
-    public QuestionsRecyclerAdapter(List<Question> qList, OnItemClickListener listener) {
+    public PostsRecyclerAdapter(List<Post> qList, OnItemClickListener listener) {
         this.list = qList;
         this.mOnClick = listener;
     }
@@ -32,7 +34,7 @@ public class QuestionsRecyclerAdapter extends android.support.v7.widget.Recycler
     public QuestionsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater
                 .from(parent.getContext())
-                .inflate(R.layout.questions_recycler_item
+                .inflate(R.layout.posts_recycler_item
                         , parent
                         , false);
         return new QuestionsViewHolder(view);
@@ -40,8 +42,8 @@ public class QuestionsRecyclerAdapter extends android.support.v7.widget.Recycler
 
     @Override
     public void onBindViewHolder(@NonNull QuestionsViewHolder holder, int position) {
-        Question question = list.get(position);
-        holder.bind(question);
+        Post post = list.get(position);
+        holder.bind(post);
     }
 
     @Override
@@ -57,16 +59,16 @@ public class QuestionsRecyclerAdapter extends android.support.v7.widget.Recycler
 
     class QuestionsViewHolder extends RecyclerView.ViewHolder {
 
-        TextView question;
-        TextView topAnswer;
+        TextView postText;
+        TextView topComment;
         ConstraintLayout layout;
         TextView userName;
         CircleImageView userPhoto;
 
         QuestionsViewHolder(View view) {
             super(view);
-            this.question = view.findViewById(R.id.question);
-            this.topAnswer = view.findViewById(R.id.first_answer);
+            this.postText = view.findViewById(R.id.post);
+            this.topComment = view.findViewById(R.id.first_answer);
             this.layout = view.findViewById(R.id.item);
             this.userName = view.findViewById(R.id.question_user_name);
             this.userPhoto = view.findViewById(R.id.question_user_photo);
@@ -88,14 +90,12 @@ public class QuestionsRecyclerAdapter extends android.support.v7.widget.Recycler
         }
 
         //Binding data to views inside the recyclerView item
-        void bind(Question q) {
-            question.setText(q.getQuestion());
-            CommonUtils.loadImage(this.userPhoto, q.getUser().getPhotoUrl());
-            this.userName.setText(q.getUser().getName());
-            if (!q.getAnswers().isEmpty())
-                topAnswer.setText(q.getAnswers().get(0).getAnswer());
-            else
-                topAnswer.setText("No answers yet :(");
+        void bind(Post q) {
+            User user = FirestoreUtil.getUser(q.getUserId());
+            postText.setText(q.getPost());
+            CommonUtil.loadImage(this.userPhoto, user.getPhotoUrl());
+            this.userName.setText(user.getName());
+            topComment.setText("comments here");
         }
     }
 }

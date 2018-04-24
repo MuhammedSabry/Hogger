@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:hint="user name"
+        android:hint="userId name"
         app:layout_constraintBottom_toBottomOf="@+id/answer_answer_user_photo"
         app:layout_constraintStart_toEndOf="@+id/answer_answer_user_photo"
         app:layout_constraintTop_toTopOf="@+id/answer_answer_user_photo" />

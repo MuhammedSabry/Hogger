@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 27
     defaultConfig {
-        applicationId "com.sabry.muhammed.qanda"
+        applicationId "com.sabry.muhammed.hogger"
         minSdkVersion 21
         targetSdkVersion 27
         versionCode 1
@@ -26,6 +26,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:15.0.0'
     implementation 'com.google.firebase:firebase-firestore:15.0.0'
     implementation 'com.facebook.android:facebook-login:4.32.0'
+    implementation 'com.facebook.android:facebook-android-sdk:[4,5)'
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'

@@ -7,30 +7,30 @@
     tools:context=".MainActivity">
 
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="8dp"
-        android:src="@drawable/ic_email"
-        app:layout_constraintBottom_toBottomOf="@+id/email_login"
-        app:layout_constraintEnd_toEndOf="@+id/email_login"
-        app:layout_constraintTop_toTopOf="@+id/email_login" />
+    <!--<ImageView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginBottom="8dp"-->
+    <!--android:layout_marginEnd="8dp"-->
+    <!--android:layout_marginTop="8dp"-->
+    <!--android:src="@drawable/ic_email"-->
+    <!--app:layout_constraintBottom_toBottomOf="@+id/email_login"-->
+    <!--app:layout_constraintEnd_toEndOf="@+id/email_login"-->
+    <!--app:layout_constraintTop_toTopOf="@+id/email_login" />-->
 
     <Button
         android:id="@+id/email_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:background="@color/colorPrimary"
+        android:background="@drawable/btn_stats"
         android:elevation="2dp"
         android:text="@string/email_login"
         android:textColor="#fff"
         app:layout_constraintBottom_toTopOf="@id/facebook_login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view2"
         app:layout_constraintVertical_chainStyle="packed" />
 
 
@@ -39,7 +39,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:background="@color/colorPrimary"
+        android:background="@drawable/btn_stats"
         android:elevation="2dp"
         android:text="@string/facebook_login"
         android:textColor="#fff"
@@ -54,4 +54,60 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone" />
+
+    <Button
+        android:id="@+id/login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/btn_stats"
+        android:elevation="2dp"
+        android:text="@string/login"
+        android:textColor="#fff"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passwordField" />
+
+    <View
+        android:id="@+id/view2"
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/colorPrimary"
+        app:layout_constraintEnd_toEndOf="@id/login"
+        app:layout_constraintStart_toStartOf="@id/login"
+        app:layout_constraintTop_toBottomOf="@+id/login" />
+
+    <EditText
+        android:id="@+id/emailField"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:ems="10"
+        android:hint="Email"
+        android:inputType="textEmailAddress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/passwordField"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:hint="Password"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/emailField" />
+
 </android.support.constraint.ConstraintLayout>

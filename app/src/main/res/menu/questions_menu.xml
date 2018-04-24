@@ -4,6 +4,6 @@
 
     <item
         android:id="@+id/photo_icon"
-        android:title="@string/user"
+        android:title="@userId/userId"
         app:showAsAction="always" />
 </menu>

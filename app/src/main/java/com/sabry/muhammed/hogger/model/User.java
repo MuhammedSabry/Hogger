@@ -1,20 +1,21 @@
-package com.sabry.muhammed.qanda.model;
+package com.sabry.muhammed.hogger.model;
 
 import java.io.Serializable;
 import java.util.List;
 
 public class User implements Serializable {
+
     private String id;
     private String name;
     private String photoUrl;
-    private List<Question> starredQuestions;
+    private List<String> starredPosts;
 
-    public List<Question> getStarredQuestions() {
-        return starredQuestions;
+    public List<String> getStarredPosts() {
+        return starredPosts;
     }
 
-    public void setStarredQuestions(List<Question> starredQuestions) {
-        this.starredQuestions = starredQuestions;
+    public void setStarredPosts(List<String> starredPosts) {
+        this.starredPosts = starredPosts;
     }
 
     public String getId() {
@@ -40,6 +41,4 @@ public class User implements Serializable {
     public void setPhotoUrl(String photoUrl) {
         this.photoUrl = photoUrl;
     }
-
-
 }
