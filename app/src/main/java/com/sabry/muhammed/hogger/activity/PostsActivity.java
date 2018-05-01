@@ -1,24 +1,25 @@
 package com.sabry.muhammed.hogger.activity;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -26,52 +27,75 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.sabry.muhammed.hogger.R;
 import com.sabry.muhammed.hogger.adapter.PostsRecyclerAdapter;
 import com.sabry.muhammed.hogger.model.Post;
+import com.sabry.muhammed.hogger.model.User;
 import com.sabry.muhammed.hogger.util.CommonUtil;
-import com.sabry.muhammed.hogger.util.FirestoreUtil;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.sabry.muhammed.hogger.util.CommonUtil.roundImage;
 import static com.sabry.muhammed.hogger.util.CommonUtil.shutDownActivity;
 import static com.sabry.muhammed.hogger.util.FirebaseUtil.getCurrentUser;
 import static com.sabry.muhammed.hogger.util.FirebaseUtil.logoutUser;
 import static com.sabry.muhammed.hogger.util.FirestoreUtil.POST;
+import static com.sabry.muhammed.hogger.util.FirestoreUtil.USER;
+import static com.sabry.muhammed.hogger.util.FirestoreUtil.addLike;
+import static com.sabry.muhammed.hogger.util.FirestoreUtil.post;
 
 
 public class PostsActivity extends AppCompatActivity {
 
-    private static RecyclerView.Adapter mAdapter;
-    private List<Post> postsList;
+    private Map<User, Post> postsMap = new HashMap<>();
+
+    private RecyclerView.Adapter mAdapter;
     private Target target;
 
     private RecyclerView mRecyclerView;
-    private FloatingActionButton floatingActionButton;
     private RecyclerView.LayoutManager mLayoutManager;
+
+    private Button postButton;
+    private TextInputEditText postTextEditText;
+    private CircleImageView postUserPhoto;
+    private TextView postUserName;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_posts);
-        postsList = new ArrayList<>();
 
-        floatingActionButton = findViewById(R.id.add_question_button);
+
+        postButton = findViewById(R.id.add_post_button);
+        postTextEditText = findViewById(R.id.post_text);
+        postUserName = findViewById(R.id.post_user_name);
+        postUserPhoto = findViewById(R.id.post_user_photo);
+
+        CommonUtil.loadImage(postUserPhoto, getCurrentUser().getPhotoUrl());
+        postUserName.setText(getCurrentUser().getName());
 
         //RecyclerView parameters initialization
         mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        mAdapter = new PostsRecyclerAdapter(postsList, new PostsRecyclerAdapter.OnItemClickListener() {
+        mAdapter = new PostsRecyclerAdapter(postsMap, new PostsRecyclerAdapter.OnItemClickListener() {
             @Override
-            public void OnClick(View view, int position) {
-                Post post = postsList.get(position);
-                if (view.getId() == R.id.question_bookmark) {
-                    //TODO put logic for checking weather a post is starred or not
-                    Log.d("PostsActivity", "Post marked as favorite");
-                }
+            public void OnClick(View view, User user, int position) {
+                switch (view.getId()) {
 
-                //Send user to comments section
-                openCommentsActivity(post);
+                    //Add like or remove like
+                    case R.id.like_button:
+                        Post post = postsMap.get(user);
+                        addLike(post, position, mAdapter, getCurrentUser().getId());
+                        break;
+
+                    //Open the post comments
+                    default:
+                        //Send user to comments section
+                        openCommentsActivity(postsMap.get(user), user);
+                        break;
+                }
             }
 
             @Override
@@ -86,28 +110,17 @@ public class PostsActivity extends AppCompatActivity {
         mRecyclerView.setHasFixedSize(false);
         mRecyclerView.setAdapter(mAdapter);
 
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+        onDocumentChange();
+
+        postButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(PostsActivity.this);
-                final View view = LayoutInflater.from(PostsActivity.this).inflate(R.layout.dialog_fragment, null, false);
-                builder.setView(view).setPositiveButton("Add", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        TextView text = view.findViewById(R.id.question_text);
-                        FirestoreUtil.post(text.getText().toString(), getCurrentUser(), PostsActivity.this);
-                    }
-                }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-                builder.create().show();
+                if (!postTextEditText.getText().toString().isEmpty()) {
+                    post(postTextEditText.getText().toString(), getCurrentUser(), PostsActivity.this);
+                    postTextEditText.setText("");
+                }
             }
         });
-
-        onDocumentChange();
     }
 
 
@@ -167,37 +180,51 @@ public class PostsActivity extends AppCompatActivity {
         shutDownActivity(this);
     }
 
-    private void openCommentsActivity(Post post) {
+    private void openCommentsActivity(Post post, User user) {
         Intent intent = new Intent(PostsActivity.this, CommentsActivity.class);
         intent.putExtra(POST, post);
+        intent.putExtra(USER, user);
         startActivity(intent);
     }
 
     private void onDocumentChange() {
         FirebaseFirestore.getInstance().collection(POST)
-                .orderBy("date").addSnapshotListener(new EventListener<QuerySnapshot>() {
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot snapshots, @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            return;
+                        }
+                        List<DocumentChange> documentChanges = snapshots.getDocumentChanges();
+                        for (DocumentChange documentChange : documentChanges) {
+                            Post post = documentChange.getDocument().toObject(Post.class);
+                            switch (documentChange.getType()) {
+                                case ADDED:
+                                    loadPostUser(post);
+                                    break;
+                                case MODIFIED:
+//                            loadPostUser(post);
+                                    break;
+                                case REMOVED:
+                                    break;
+                            }
+                        }
+                        mAdapter.notifyDataSetChanged();
+                    }
+                });
+    }
+
+    private void loadPostUser(final Post post) {
+        FirebaseFirestore.getInstance().collection(USER).document(post.getUserId()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
-            public void onEvent(@Nullable QuerySnapshot snapshots, @Nullable FirebaseFirestoreException e) {
-                if (e != null) {
-                    return;
-                }
-                List<DocumentChange> documentChanges = snapshots.getDocumentChanges();
-                for (int i = 0; i < documentChanges.size(); i++) {
-                    DocumentChange documentChange = documentChanges.get(i);
-                    switch (documentChange.getType()) {
-                        case ADDED:
-                            postsList.add(documentChange.getDocument().toObject(Post.class));
-                            break;
-                        case MODIFIED:
-//                            postsList.set(i, documentChange.getDocument().toObject(Post.class));
-                            break;
-                        case REMOVED:
-//                            postsList.remove(i);
-                            break;
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot snapshot = task.getResult();
+                    if (snapshot.exists()) {
+                        postsMap.put(snapshot.toObject(User.class), post);
+                        mAdapter.notifyDataSetChanged();
                     }
                 }
-//                setPosts(list);
-                mAdapter.notifyDataSetChanged();
             }
         });
     }

@@ -8,7 +8,10 @@
     <string name="email_login">Register With Email</string>
     <string name="facebook_login">Login With Facebook</string>
     <string name="top_answer">Top comment:</string>
-    <string name="postId">Question:</string>
+    <string name="FragTitle">Question:</string>
     <string name="quit_app">Press back again to quit app</string>
     <string name="login">Login</string>
+    <string name="comment">Comment</string>
+    <string name="like">Like</string>
+    <string name="post">Post</string>
 </resources>

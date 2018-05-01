@@ -9,17 +9,19 @@ import android.widget.TextView;
 
 import com.sabry.muhammed.hogger.R;
 import com.sabry.muhammed.hogger.model.Comment;
+import com.sabry.muhammed.hogger.model.User;
 import com.sabry.muhammed.hogger.util.CommonUtil;
-import com.sabry.muhammed.hogger.util.FirestoreUtil;
 
-import java.util.List;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class CommentsRecyclerAdapter extends RecyclerView.Adapter<CommentsRecyclerAdapter.AnswersViewHolder> {
-    List<Comment> comments;
+    private ArrayList<User> users;
+    private LinkedHashMap<User, Comment> comments;
 
-    public CommentsRecyclerAdapter(List<Comment> commentList) {
+    public CommentsRecyclerAdapter(LinkedHashMap<User, Comment> commentList) {
         comments = commentList;
     }
 
@@ -29,13 +31,15 @@ public class CommentsRecyclerAdapter extends RecyclerView.Adapter<CommentsRecycl
     public AnswersViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater
                 .from(parent.getContext())
-                .inflate(R.layout.answers_recycler_item, parent, false);
+                .inflate(R.layout.comments_recycler_item, parent, false);
         return new AnswersViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull AnswersViewHolder holder, int position) {
-        holder.bind(comments.get(position));
+        this.users = new ArrayList<>(comments.keySet());
+        Comment comment = comments.get(users.get(position));
+        holder.bind(comment, users.get(position));
     }
 
     @Override
@@ -51,16 +55,18 @@ public class CommentsRecyclerAdapter extends RecyclerView.Adapter<CommentsRecycl
 
         AnswersViewHolder(View itemView) {
             super(itemView);
-            this.userName = itemView.findViewById(R.id.answer_answer_user_name);
-            this.userPhoto = itemView.findViewById(R.id.answer_answer_user_photo);
+            this.userName = itemView.findViewById(R.id.comments_comment_user_name);
+            this.userPhoto = itemView.findViewById(R.id.comments_comment_user_photo);
             this.answerText = itemView.findViewById(R.id.answer_answer);
         }
 
-        void bind(Comment comment) {
-            this.userName.setText(comment.getUserId());
+        void bind(Comment comment, User user) {
+            this.userName.setText(user.getName());
             this.answerText.setText(comment.getComment());
-            FirestoreUtil.getUser(comment.getId()).getPhotoUrl();
-            CommonUtil.loadImage(this.userPhoto, FirestoreUtil.getUser(comment.getId()).getPhotoUrl());
+            if (user.getPhotoUrl() == null)
+                this.userPhoto.setImageResource(R.drawable.ic_no_photo);
+            else
+                CommonUtil.loadImage(this.userPhoto, user.getPhotoUrl());
         }
     }
 

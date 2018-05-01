@@ -6,66 +6,9 @@
     android:layout_height="match_parent"
     tools:context=".activity.CommentsActivity">
 
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/answer_question_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/question_rounded"
-        android:clipToPadding="true"
-        android:elevation="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/answer_user_photo"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/answer_user_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:hint="userId name"
-            app:layout_constraintBottom_toBottomOf="@+id/answer_user_photo"
-            app:layout_constraintStart_toEndOf="@+id/answer_user_photo"
-            app:layout_constraintTop_toTopOf="@+id/answer_user_photo" />
-
-        <ImageButton
-            android:id="@+id/answer_question_bookmark"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/ic_star_false"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/answer_question"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:hint="mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm why ?"
-            android:textColor="@color/colorPrimaryDark"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/answer_question_bookmark" />
-    </android.support.constraint.ConstraintLayout>
-
+    <include
+        android:id="@+id/comment_post_layout"
+        layout="@layout/posts_recycler_item" />
 
     <View
         android:id="@+id/view"
@@ -75,30 +18,19 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:background="@color/colorPrimaryDark"
-        app:layout_constraintEnd_toEndOf="@+id/answer_question_layout"
-        app:layout_constraintStart_toStartOf="@+id/answer_question_layout"
-        app:layout_constraintTop_toBottomOf="@+id/answer_question_layout" />
+        app:layout_constraintEnd_toEndOf="@+id/comment_post_layout"
+        app:layout_constraintStart_toStartOf="@+id/comment_post_layout"
+        app:layout_constraintTop_toBottomOf="@+id/comment_post_layout" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/answers_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/add_answer_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="16dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:src="@drawable/ic_add"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
 </android.support.constraint.ConstraintLayout>

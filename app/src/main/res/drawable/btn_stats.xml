@@ -3,14 +3,8 @@
 
     <item android:state_enabled="true">
         <color android:color="@color/colorPrimary" />
-        <!--<shape>-->
-        <!--<stroke android:color="@color/colorPrimaryDark"/>-->
-        <!--</shape>-->
     </item>
     <item android:state_enabled="false">
         <color android:color="@color/colorPrimaryDarkWashed" />
-        <!--<shape>-->
-        <!--<stroke android:color="@color/colorPrimaryDarkWashed" />-->
-        <!--</shape>-->
     </item>
 </selector>

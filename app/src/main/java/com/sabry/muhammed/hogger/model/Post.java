@@ -2,6 +2,8 @@ package com.sabry.muhammed.hogger.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Post implements Serializable {
 
@@ -9,6 +11,19 @@ public class Post implements Serializable {
     private String userId;
     private String post;
     private Date date;
+    private Map<String, Boolean> likedUsers;
+
+    public Post() {
+        likedUsers = new HashMap<>();
+    }
+
+    public Map<String, Boolean> getLikedUsers() {
+        return likedUsers;
+    }
+
+    public void setLikedUsers(Map<String, Boolean> likedUsers) {
+        this.likedUsers = likedUsers;
+    }
 
     public Date getDate() {
         return date;

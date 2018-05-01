@@ -3,6 +3,8 @@ package com.sabry.muhammed.hogger.util;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -20,6 +22,9 @@ import com.sabry.muhammed.hogger.model.User;
 
 import java.util.Date;
 import java.util.List;
+
+import static com.sabry.muhammed.hogger.util.CommonUtil.buttonLiked;
+import static com.sabry.muhammed.hogger.util.CommonUtil.buttonNotLiked;
 
 public class FirestoreUtil {
 
@@ -138,6 +143,38 @@ public class FirestoreUtil {
             public void onFailure(@NonNull Exception e) {
             }
         });
+    }
 
+    public static void addLike(Post post, final int position, final RecyclerView.Adapter adapter, String userId) {
+        if (post.getLikedUsers().get(userId) != null && post.getLikedUsers().get(userId))
+            post.getLikedUsers().put(userId, false);
+        else
+            post.getLikedUsers().put(userId, true);
+
+        FirebaseFirestore.getInstance().collection(POST).document(post.getId()).set(post).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                if (adapter != null)
+                    adapter.notifyItemChanged(position);
+            }
+        });
+    }
+
+    public static void addLike(final Post post, final Button button, final String userId) {
+        if (post.getLikedUsers().get(userId) != null && post.getLikedUsers().get(userId))
+            post.getLikedUsers().put(userId, false);
+        else
+            post.getLikedUsers().put(userId, true);
+        FirebaseFirestore.getInstance().collection(POST).document(post.getId()).set(post).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                if (button != null) {
+                    if (post.getLikedUsers().get(userId) != null && post.getLikedUsers().get(userId))
+                        buttonLiked(button);
+                    else
+                        buttonNotLiked(button);
+                }
+            }
+        });
     }
 }

@@ -2,16 +2,12 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/item"
+    style="@style/postRecyclerItem"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    android:background="@drawable/question_rounded"
-    android:clipToPadding="true"
-    android:elevation="6dp"
-    android:padding="8dp">
+    android:layout_height="wrap_content">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/question_user_photo"
+        android:id="@+id/post_user_photo"
         android:layout_width="36dp"
         android:layout_height="36dp"
         android:layout_marginStart="8dp"
@@ -20,24 +16,15 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/question_user_name"
+        android:id="@+id/post_user_name"
+        style="@style/userNameText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:hint="userId name"
-        app:layout_constraintBottom_toBottomOf="@+id/question_user_photo"
-        app:layout_constraintStart_toEndOf="@+id/question_user_photo"
-        app:layout_constraintTop_toTopOf="@+id/question_user_photo" />
-
-    <ImageButton
-        android:id="@+id/question_bookmark"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/ic_star_false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toBottomOf="@+id/post_user_photo"
+        app:layout_constraintStart_toEndOf="@+id/post_user_photo"
+        app:layout_constraintTop_toTopOf="@+id/post_user_photo" />
 
     <TextView
         android:id="@+id/post"
@@ -47,45 +34,59 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:hint="mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm why ?"
-        android:textColor="@color/colorPrimaryDark"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/question_user_photo" />
+        app:layout_constraintTop_toBottomOf="@+id/post_user_photo" />
 
     <View
-        android:id="@+id/top_of"
+        android:id="@+id/buttons_seperator"
         android:layout_width="match_parent"
-        android:layout_height="2dp"
+        android:layout_height="1dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:background="@color/colorPrimaryDark"
+        android:background="@color/colorAccent"
         app:layout_constraintEnd_toEndOf="@+id/post"
         app:layout_constraintStart_toStartOf="@+id/post"
         app:layout_constraintTop_toBottomOf="@+id/post" />
 
-    <TextView
-        android:id="@+id/first_answer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:hint="because bla bla bla bla"
-        android:textColor="@color/colorPrimaryDark"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/top_of"
-        app:layout_constraintStart_toStartOf="@+id/textView2"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
-    <TextView
-        android:id="@+id/textView2"
+    <Button
+        android:id="@+id/like_button"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:layout_marginStart="8dp"
+        android:drawableStart="@drawable/ic_not_liked"
+        android:padding="8dp"
+        android:text="@string/like"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttons_seperator" />
+
+    <Button
+        android:id="@+id/comment_button"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="4dp"
+        android:drawableLeft="@drawable/ic_comment"
+        android:padding="8dp"
+        android:text="@string/comment"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline3"
+        app:layout_constraintTop_toBottomOf="@+id/buttons_seperator" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/top_answer"
-        app:layout_constraintStart_toStartOf="@+id/top_of"
-        app:layout_constraintTop_toBottomOf="@+id/top_of" />
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
 
 </android.support.constraint.ConstraintLayout>

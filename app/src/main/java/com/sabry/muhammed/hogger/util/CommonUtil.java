@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.sabry.muhammed.hogger.R;
@@ -51,10 +52,22 @@ public class CommonUtil {
     }
 
     public static void loadImage(CircleImageView view, String url) {
+        if (url.isEmpty())
+            view.setImageResource(R.drawable.ic_no_photo);
         Picasso.get().load(url).into(view);
     }
 
     public static void loadImage(Target target, String url) {
         Picasso.get().load(url).into(target);
+    }
+
+    public static void buttonLiked(Button button) {
+        button.setTextColor(button.getContext().getResources().getColor(R.color.colorPrimary));
+        button.setCompoundDrawablesWithIntrinsicBounds(button.getContext().getResources().getDrawable(R.drawable.ic_liked), null, null, null);
+    }
+
+    public static void buttonNotLiked(Button button) {
+        button.setTextColor(button.getContext().getResources().getColor(R.color.black));
+        button.setCompoundDrawablesWithIntrinsicBounds(button.getContext().getResources().getDrawable(R.drawable.ic_not_liked), null, null, null);
     }
 }
